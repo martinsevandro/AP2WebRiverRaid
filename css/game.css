@@ -31,7 +31,7 @@ body {
 
 [wm-flappy] {
     position: relative;
-    border: 5px solid dodgerblue;
+    border: 5px solid whitesmoke;
     height: 700px;
     width: 1200px;
     margin: 15px;
@@ -39,38 +39,38 @@ body {
     overflow: hidden;
 }
 
-.passaro {
+.carro {
     position: absolute;
-    width: 80px;
+    width: 50px;
     left: calc(50% - 30px);
     bottom: calc(2%);   /* carro ficar na parte inferior */
 }
 
 .par-de-barreiras {
     position: absolute;
-    top: 0;
+    top: 0; 
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .barreira {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
 .barreira .borda {
-    height: 30px;
-    width: 110px;
-    background: linear-gradient(90deg, #e60202, #ffffff);
+    height: 60px;
+    width: 50px;
+    background: linear-gradient(180deg, #e60202, #ffffff); /*estilo borda F1*/
     /* border: 2px solid #000; */
 }
 
 .barreira .corpo {
-    height: 40px;
-    width: 110px;
+    height: 6   0px;
+    width:  50px;
     background: #639301;
     /* border-left: 2px solid #000;
     border-right: 2px solid #000; */
