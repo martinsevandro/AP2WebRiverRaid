@@ -35,7 +35,7 @@ body {
     height: 700px;
     width: 1200px;
     margin: 15px;
-    background-color: rgb(180, 132, 60);
+    background-color: #6b6b69;
     overflow: hidden;
 }
 
@@ -48,11 +48,12 @@ body {
 
 .par-de-barreiras {
     position: absolute;
-    top: 0; 
-    height: 100%;
+    /* top: 0;  */
+    /* height: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .barreira {
@@ -69,8 +70,8 @@ body {
 }
 
 .barreira .corpo {
-    height: 6   0px;
-    width:  50px;
+    height: 60px;
+    width: 450px;
     background: #639301;
     /* border-left: 2px solid #000;
     border-right: 2px solid #000; */

@@ -91,11 +91,17 @@ function Carro(alturaJogo) {
     this.elemento = novoElemento('img', 'carro')
     this.elemento.src = 'img/carro.png'
 
-     this.getX = () => parseInt(this.elemento.style.center.split('px')[0])
-     this.setX = x => this.elemento.style.center = `${x}px`
+    this.getX = () => parseInt(this.elemento.style.top.split('px')[0])
+    this.setX = x => this.elemento.style.top = `${x}px`
 
     window.onkeydown = e => voando = true
     window.onkeyup = e => voando = false
+
+    let esquerda = false;
+    let direita = false;
+    
+    window.onkeydown = e => esquerda = true
+    window.onkeyup = e => direita = true
 
     this.animar = () => {
         const novoX = this.getX() + (voando ? 8 : -5)
