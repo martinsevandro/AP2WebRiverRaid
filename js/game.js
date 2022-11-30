@@ -6,39 +6,50 @@ function novoElemento(tagName, className) {
 
 function Barreira(reversa = false) {
     this.elemento = novoElemento('div', 'barreira')
-    const borda = novoElemento('div', 'borda')
+    //const borda = novoElemento('div', 'borda')
     const corpo = novoElemento('div', 'corpo')
-    this.elemento.appendChild(reversa ? corpo : borda)
-    this.elemento.appendChild(reversa ? borda : corpo)
+    // this.elemento.appendChild(reversa ? corpo : borda)
+    // this.elemento.appendChild(reversa ? borda : corpo)
+    this.elemento.appendChild(corpo)
 
-    this.setAltura = altura => corpo.style.height = `${altura}px`
+    this.setAltura = altura => corpo.style.height = `40px` //fixando altura
+    this.setComprimento = comprimento => corpo.style.width = `${comprimento}px`
 
 }
 
 
-// const b = new Barreira(true)
-// b.setAltura(100)  //nao é pra definir altura
-// document.querySelector('[wm-flappy]').appendChild(b.elemento) 
+//  const b = new Barreira(true)
+//  b.setAltura(300)  //nao é pra definir altura mas o comprimento na horizontal
+//  b.setComprimento(50)
+//  document.querySelector('[wm-flappy]').appendChild(b.elemento) 
 
 
 
-function ParDeBarreiras(altura, abertura, popsicaoNaTela) {
+function ParDeBarreiras(comprimento, abertura, popsicaoNaTela) {
     this.elemento = novoElemento('div', 'par-de-barreiras')
-    this.superior = new Barreira(true)
-    this.inferior = new Barreira(false)
+    this.superior = new Barreira(true)  //barreira esquerda
+    this.inferior = new Barreira(false) //barreira direita
 
     this.elemento.appendChild(this.superior.elemento)
     this.elemento.appendChild(this.inferior.elemento)
 
+    //  this.sortearAbertura = () => { //aqui deve ser definido estaticamente de acordo com a imagem
+    //     const alturaSuperior = Math.random() * (altura - abertura)
+    //     const alturaInferior = altura - abertura - alturaSuperior
+    //     this.superior.setAltura(alturaSuperior)
+    //     this.inferior.setAltura(alturaInferior)
+    // }
 
-     this.sortearAbertura = () => {
-        const alturaSuperior = Math.random() * (altura - abertura)
-        const alturaInferior = altura - abertura - alturaSuperior
-        this.superior.setAltura(alturaSuperior)
-        this.inferior.setAltura(alturaInferior)
+    this.sortearAbertura = () => {      
+        // caminho livre no centro
+        const comprimentoSuperior = comprimento - abertura;
+        console.log("aqui", comprimento)
+        const comprimentoInferior = comprimento - abertura - comprimentoSuperior
+        this.superior.setComprimento(comprimentoSuperior)
+        this.inferior.setComprimento(comprimentoInferior)
     }
-    this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
-    this.setX =  popsicaoNaTela => this.elemento.style.left = `${popsicaoNaTela}px`
+    this.getX = () => parseInt(this.elemento.style.bottom.split('px')[0])
+    this.setX =  popsicaoNaTela => this.elemento.style.bottom = `${popsicaoNaTela}px`
     this.getLargura = () => this.elemento.clientWidth
 
     this.sortearAbertura()
@@ -75,10 +86,10 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
     }
 }
 
-const barreiras = new Barreiras(500, 300, 10, 400)
+const barreiras = new Barreiras(300, 300, 10, 400)
 const areaDoJogo = document.querySelector('[wm-flappy]')
 
-barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento)) 
+// barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento))       //"criando uma barrer estatica"
 
 // setInterval(() => {
 //     barreiras.animar()
@@ -86,16 +97,18 @@ barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento))
 
 
 function Carro(alturaJogo) {
+    alturaJogo = window.width;
+    console.log("altura:",alturaJogo)
     let voando = false
 
     this.elemento = novoElemento('img', 'carro')
     this.elemento.src = 'img/carro.png'
 
-    this.getX = () => parseInt(this.elemento.style.top.split('px')[0])
-    this.setX = x => this.elemento.style.top = `${x}px`
+    this.getX = () => parseInt(this.elemento.style.bottom.split('px')[0])
+    this.setX = x => this.elemento.style.bottom = `${x}px`
 
-    window.onkeydown = e => voando = true
-    window.onkeyup = e => voando = false
+    // window.onkeydown = e => voando = true
+    // window.onkeyup = e => voando = false
 
     let esquerda = false;
     let direita = false;
@@ -104,7 +117,8 @@ function Carro(alturaJogo) {
     window.onkeyup = e => direita = true
 
     this.animar = () => {
-        const novoX = this.getX() + (voando ? 8 : -5)
+        const novoX = this.getX() + (esquerda ? -5 : 0)
+        novoX = this.getX() + (direita ? 5 : 0)
         const alturaMaxima = alturaJogo - this.elemento.clientWidth
 
         if (novoX <= 0) {
